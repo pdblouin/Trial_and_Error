@@ -10,14 +10,14 @@ clsBoard::clsBoard()
 
     
     */
-};
+}
 
 clsBoard::~clsBoard()
 {
 
-};
+}
 
 void clsBoard::runSimulation()
 {
-
-};
+    //Add stuff here later
+}
