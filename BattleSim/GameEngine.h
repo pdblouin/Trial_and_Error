@@ -14,6 +14,7 @@ private:
 	std::unique_ptr<olc::Sprite> sprHeart;
 	std::unique_ptr<olc::Decal> decHeart;
 	clsCard* pTest_card;
+	clsBoard* pGameBoard;
 
 public:
 	clsEngine();
@@ -26,5 +27,7 @@ public:
 	bool OnUserCreate() override;
 
 	bool OnUserUpdate(float fElapsedTime) override;
+
+	//bool OnUserDestroy() override;
 
 };
