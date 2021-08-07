@@ -11,11 +11,6 @@ private:
 
 	int circlePos_X, circlePos_Y;
 
-	std::unique_ptr<olc::Sprite> sprHeart;
-	std::unique_ptr<olc::Decal> decHeart;
-	clsCard* pTest_card;
-	clsBoard* pGameBoard;
-
 public:
 	clsEngine();
     ~clsEngine();

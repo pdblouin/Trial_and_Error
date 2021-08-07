@@ -1,19 +1,24 @@
 #include "olcPixelGameEngine.h"
 #include "GameEngine.h"
+#include "Board.h"
 
 
 	clsEngine::clsEngine()
 	{
 		// Name your application
 		sAppName = "Test_String";
-		circlePos_X = ScreenWidth()/2;
-		circlePos_Y = ScreenHeight()/2;
-	}
+
+		//clsBoard* pGameBoard;
+		//pGameBoard = new clsBoard;
+
+		int circlePos_X = 0;
+		int circlePos_Y = 0;
+	};
 
     clsEngine::~clsEngine()
     {
-        //Nothing
-    }
+        //delete pGameBoard;
+    };
 
 	olc::vi2d clsEngine::UpdateInputCoords()
 	{
@@ -33,24 +38,18 @@
 		if (circlePos_Y < 0) circlePos_Y = 0;
 
 		return { circlePos_X, circlePos_Y };
-	}
+	};
 
 	bool clsEngine::OnUserCreate()
 	{
-		// Called once at the start, so create things here
-		pGameBoard = new clsBoard;
-
-		
-		sprHeart = std::make_unique<olc::Sprite>("./heart.png");
-		decHeart = std::make_unique<olc::Decal>(sprHeart.get());
 		return true;
-	}
+	};
 
 	bool clsEngine::OnUserUpdate(float fElapsedTime)
 	{
-		// Called once per frame, draws random coloured pixels
-		if (GetKey(olc::Key::X).bHeld) DrawDecal(UpdateInputCoords(), decHeart.get());
-		pTest_card->DrawSelf(this);
-		//FillCircle(UpdateCircleCoords(), 5);
+		//Clear(olc::VERY_DARK_BLUE);
+
+		//DrawString(UpdateInputCoords(),"Hello", olc::CYAN, 10);
+		
 		return true;
-	}
+	};

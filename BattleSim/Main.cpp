@@ -16,5 +16,6 @@ int main()
 	clsEngine gameInstance;
 	if (gameInstance.Construct(1920, 1080, 1, 1))
 		gameInstance.Start();
+
 	return 0;
 }
