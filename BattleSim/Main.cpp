@@ -11,7 +11,7 @@
 int main()
 {
 	//Get new seed for rand
-	std::srand(std::time(NULL));
+	std::srand(static_cast<uint32_t>(std::time(NULL)));
 
 	clsEngine demo;
 	if (demo.Construct(1920, 1080, 1, 1))

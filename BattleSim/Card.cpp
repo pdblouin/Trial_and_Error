@@ -5,7 +5,11 @@
 clsCard::clsCard(olc::vi2d init_Position)
 	: m_Position(init_Position)
 {
-
+	m_AP = 0;
+	m_HP = 0;
+	m_Tier = 0;
+	m_isEnemy = false;
+	m_isFriendly = false;
 };
 
 //Destructor

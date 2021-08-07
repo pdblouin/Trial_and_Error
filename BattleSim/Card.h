@@ -1,5 +1,5 @@
-
 #pragma once
+#include "olcPixelGameEngine.h"
 
 class clsCard
 {
