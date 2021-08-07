@@ -10,4 +10,7 @@ public:
 	~clsBoard();
 
 private:
+
+	void runSimulation(); //Maybe custom log class type? To log results?
+
 };
