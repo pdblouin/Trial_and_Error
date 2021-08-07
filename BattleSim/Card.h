@@ -17,6 +17,7 @@ class clsCard
         clsCard(olc::vi2d init_Position);
         ~clsCard();
         void DrawSelf(olc::PixelGameEngine* pge);
+    
     private: //Private methods
 
 };
