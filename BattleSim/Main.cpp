@@ -13,8 +13,8 @@ int main()
 	//Get new seed for rand
 	std::srand(static_cast<uint32_t>(std::time(NULL)));
 
-	clsEngine demo;
-	if (demo.Construct(1920, 1080, 1, 1))
-		demo.Start();
+	clsEngine gameInstance;
+	if (gameInstance.Construct(1920, 1080, 1, 1))
+		gameInstance.Start();
 	return 0;
 }

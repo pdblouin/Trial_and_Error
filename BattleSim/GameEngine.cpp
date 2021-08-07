@@ -40,7 +40,7 @@
 		// Called once at the start, so create things here
 		pTest_card = new clsCard({ScreenWidth()/2, ScreenHeight()/2});
 
-
+		
 		sprHeart = std::make_unique<olc::Sprite>("./heart.png");
 		decHeart = std::make_unique<olc::Decal>(sprHeart.get());
 		return true;
@@ -48,16 +48,10 @@
 
 	bool clsEngine::OnUserUpdate(float fElapsedTime)
 	{
+		SetPixelMode(olc::Pixel::MASK);
 		// Called once per frame, draws random coloured pixels
-		DrawDecal(UpdateInputCoords(), decHeart.get());
+		if (GetKey(olc::Key::X).bHeld) DrawDecal(UpdateInputCoords(), decHeart.get());
 		pTest_card->DrawSelf(this);
 		//FillCircle(UpdateCircleCoords(), 5);
-		return true;
-	}
-
-	bool clsEngine::OnUserDelete()
-	{
-
-		delete pTest_card;
 		return true;
 	}

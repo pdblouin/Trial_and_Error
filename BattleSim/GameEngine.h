@@ -27,6 +27,4 @@ public:
 
 	bool OnUserUpdate(float fElapsedTime) override;
 
-	bool OnUserDelete();
-
 };
