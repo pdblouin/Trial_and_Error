@@ -9,20 +9,24 @@ class clsEngine : public olc::PixelGameEngine
 {
 private:
 
-	int circlePos_X, circlePos_Y;
+	uint8_t backgroundLayer{ 0 };
+	bool menuFlag_Display{ true };
+	bool menuFlag_Clear{ true };
+
+	float alphaValuePulsating{ 0.0f };
+
+public:
+
+	olc::Sprite* spr_olcLogo{ nullptr };
+
+private:
 
 public:
 	clsEngine();
-    ~clsEngine();
-
-	olc::vi2d UpdateInputCoords();
-
-public:
+	~clsEngine();
 
 	bool OnUserCreate() override;
-
 	bool OnUserUpdate(float fElapsedTime) override;
-
-	//bool OnUserDestroy() override;
+	bool OnUserDestroy() override;
 
 };

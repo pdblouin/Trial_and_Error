@@ -1,8 +1,9 @@
 #pragma once
 
+#include "olcPixelGameEngine.h"
+
 #include <array>
 #include "Card.h"
-#include "olcPixelGameEngine.h"
 
 class clsBoard
 {
@@ -12,8 +13,8 @@ public:
 	~clsBoard();
 
 private:
-	std::array<clsCard*, 7> friendlyCards;
-	std::array<clsCard*, 7> enemyCards;
+	std::array<clsCard*, 7> friendlyCards{ nullptr };
+	std::array<clsCard*, 7> enemyCards{ nullptr };
 
 private:
 

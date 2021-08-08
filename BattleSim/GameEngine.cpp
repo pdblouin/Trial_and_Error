@@ -1,55 +1,60 @@
 #include "olcPixelGameEngine.h"
+
+#include <cmath>
+#include <string>
+
 #include "GameEngine.h"
 #include "Board.h"
 
 
-	clsEngine::clsEngine()
+clsEngine::clsEngine()
+{
+	// Name your application
+	sAppName = "Test_String";
+
+	//clsBoard* pGameBoard;
+	//pGameBoard = new clsBoard;
+};
+
+clsEngine::~clsEngine()
+{
+    //delete pGameBoard;
+};
+
+bool clsEngine::OnUserCreate()
+{
+//Set up menu screen
+	spr_olcLogo = new olc::Sprite("./olcPGE_Logo.png");
+	Clear(olc::BLACK);
+	DrawSprite({ (ScreenWidth() / 2 - (spr_olcLogo->width / 2)), (ScreenHeight() / 2 - spr_olcLogo->height / 2) }, spr_olcLogo);
+	DrawString({ ScreenWidth() / 30 * 11, (ScreenHeight() / 3) }, "Made using:", olc::WHITE, 4);
+	DrawString({ ScreenWidth() / 53 * (54/2 - 36/2), (ScreenHeight() / 3 * 2) }, "Copyright 2018\-2021 OneLoneCoder.com", olc::WHITE, 3);
+
+
+	return true;
+};
+
+bool clsEngine::OnUserUpdate(float fElapsedTime)
+{
+
+	if (menuFlag_Display)
 	{
-		// Name your application
-		sAppName = "Test_String";
+		float throwawayInt;
+		DrawStringDecal({ static_cast<float>(ScreenWidth() / 4), static_cast<float>(ScreenHeight() / 3 * 2.5f) }, 
+			"Press [ENTER] to continue.", 
+			olc::Pixel(255,255,255, static_cast<int>(255 * abs(sinf(alphaValuePulsating)))),
+			{ 3.0f, 3.0f });
 
-		//clsBoard* pGameBoard;
-		//pGameBoard = new clsBoard;
+		alphaValuePulsating = alphaValuePulsating + fElapsedTime;
+	}
 
-		int circlePos_X = 0;
-		int circlePos_Y = 0;
-	};
+	if (GetKey(olc::ENTER).bPressed) { menuFlag_Display = false; }
+	if (!menuFlag_Display && menuFlag_Clear) { Clear(olc::WHITE); menuFlag_Clear = false; } //Only happens once, then flag is flipped
 
-    clsEngine::~clsEngine()
-    {
-        //delete pGameBoard;
-    };
+	return true;	
+};
 
-	olc::vi2d clsEngine::UpdateInputCoords()
-	{
-		int posX = ScreenWidth();
-		int posY = ScreenHeight();
-
-		int modX = posX / 50;
-		int modY = posY / 50;
-
-		circlePos_X = (std::rand() % 2 == 0) ? circlePos_X + std::rand() % modX : circlePos_X - std::rand() % modX;
-		circlePos_Y = (std::rand() % 2 == 0) ? circlePos_Y + std::rand() % modY : circlePos_Y - std::rand() % modY;
-
-		if (circlePos_X > posX) circlePos_X = posX;
-		if (circlePos_Y > posY) circlePos_Y = posY;
-
-		if (circlePos_X < 0) circlePos_X = 0;
-		if (circlePos_Y < 0) circlePos_Y = 0;
-
-		return { circlePos_X, circlePos_Y };
-	};
-
-	bool clsEngine::OnUserCreate()
-	{
-		return true;
-	};
-
-	bool clsEngine::OnUserUpdate(float fElapsedTime)
-	{
-		//Clear(olc::VERY_DARK_BLUE);
-
-		//DrawString(UpdateInputCoords(),"Hello", olc::CYAN, 10);
-		
-		return true;
-	};
+bool clsEngine::OnUserDestroy()
+{
+	return true;
+};
