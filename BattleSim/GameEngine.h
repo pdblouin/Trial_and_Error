@@ -10,10 +10,9 @@ class clsEngine : public olc::PixelGameEngine
 private:
 
 	uint8_t backgroundLayer{ 0 };
-	bool menuFlag_Display{ true };
-	bool menuFlag_Clear{ true };
+	bool flagMenuDisplay{ true };
 
-	float alphaValuePulsating{ 0.0f };
+	long double timeElapsed{ 0.0f };
 
 public:
 
@@ -30,3 +29,5 @@ public:
 	bool OnUserDestroy() override;
 
 };
+
+void DrawMenuScreen(bool& flagDisplay, long double elapsedTime, olc::PixelGameEngine* pge);

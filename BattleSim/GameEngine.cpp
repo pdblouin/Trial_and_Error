@@ -36,20 +36,8 @@ bool clsEngine::OnUserCreate()
 
 bool clsEngine::OnUserUpdate(float fElapsedTime)
 {
-
-	if (menuFlag_Display)
-	{
-		float throwawayInt;
-		DrawStringDecal({ static_cast<float>(ScreenWidth() / 4), static_cast<float>(ScreenHeight() / 3 * 2.5f) }, 
-			"Press [ENTER] to continue.", 
-			olc::Pixel(255,255,255, static_cast<int>(255 * abs(sinf(alphaValuePulsating)))),
-			{ 3.0f, 3.0f });
-
-		alphaValuePulsating = alphaValuePulsating + fElapsedTime;
-	}
-
-	if (GetKey(olc::ENTER).bPressed) { menuFlag_Display = false; }
-	if (!menuFlag_Display && menuFlag_Clear) { Clear(olc::WHITE); menuFlag_Clear = false; } //Only happens once, then flag is flipped
+	timeElapsed += fElapsedTime;
+	DrawMenuScreen(flagMenuDisplay, timeElapsed, this);
 
 	return true;	
 };
@@ -58,3 +46,26 @@ bool clsEngine::OnUserDestroy()
 {
 	return true;
 };
+
+void DrawMenuScreen(bool& flagDisplay, long double elapsedTime, olc::PixelGameEngine* pge)
+{
+
+	bool debugMode{true};
+	if (debugMode)
+	{
+		pge->DrawStringDecal({0.0f,0.0f}, std::to_string(elapsedTime), olc::WHITE, {3.0f, 3.0f});
+		pge->DrawStringDecal({0.0f,30.0f}, std::to_string(128 + 128*(sinf(elapsedTime))), olc::WHITE, {3.0f, 3.0f});
+	}
+
+	if (flagDisplay)
+	{
+		pge->DrawStringDecal({ static_cast<float>(pge->ScreenWidth() / 4), static_cast<float>(pge->ScreenHeight() / 3 * 2.5f) }, 
+			"Press [ENTER] to continue.", 
+			olc::Pixel(255,255,255, static_cast<int>(128 + 128 * (sinf(elapsedTime)))),
+			{ 3.0f, 3.0f });
+	}
+
+	if (pge->GetKey(olc::ENTER).bPressed && flagDisplay) { flagDisplay = false; pge->Clear(olc::WHITE); } 
+
+	return;
+}
