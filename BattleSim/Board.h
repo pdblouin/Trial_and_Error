@@ -16,6 +16,10 @@ private:
 	std::array<clsCard*, 7> friendlyCards{ nullptr };
 	std::array<clsCard*, 7> enemyCards{ nullptr };
 
+public:
+
+	void Setup();
+
 private:
 
 	void runSimulation(); //Maybe custom log class type? To log results?

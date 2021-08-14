@@ -28,6 +28,8 @@ public:
 	bool OnUserUpdate(float fElapsedTime) override;
 	bool OnUserDestroy() override;
 
-};
+	void DrawMenuScreen(bool& flagDisplay, long double elapsedTime);
+	void InitMenuScreen(olc::Pixel pixelColour_BG);
 
-void DrawMenuScreen(bool& flagDisplay, long double elapsedTime, olc::PixelGameEngine* pge);
+
+};
