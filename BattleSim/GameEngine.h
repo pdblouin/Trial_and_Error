@@ -9,12 +9,12 @@ class clsEngine : public olc::PixelGameEngine
 {
 private:
 
-	uint8_t backgroundLayer{ 0 };
 	bool flagMenuDisplay{ true };
 
 	long double timeElapsed{ 0.0f };
 
 public:
+	clsBoard* pGameBoard{ nullptr };
 
 	olc::Sprite* spr_olcLogo{ nullptr };
 

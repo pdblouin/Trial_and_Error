@@ -11,42 +11,48 @@ clsEngine::clsEngine()
 {
 	// Name your application
 	sAppName = "Test_String";
+	pGameBoard = new clsBoard(this);
 
-	//clsBoard* pGameBoard;
-	//pGameBoard = new clsBoard;
-};
+}
 
 clsEngine::~clsEngine()
 {
-    //delete pGameBoard;
-};
+	delete pGameBoard;
+}
 
 bool clsEngine::OnUserCreate()
 {
-//Set up menu screen
+	//Set up menu screen
 	InitMenuScreen(olc::BLACK);
-	
+
+	//Set up game board in background
+	pGameBoard->Setup();
+
 	return true;
-};
+}
 
 bool clsEngine::OnUserUpdate(float fElapsedTime)
 {
 	timeElapsed += fElapsedTime;
 	DrawMenuScreen(flagMenuDisplay, timeElapsed);
 
+	pGameBoard->DrawTest();
+
 	return true;	
-};
+}
 
 bool clsEngine::OnUserDestroy()
 {
+	
 	return true;
-};
+}
 
 
 void clsEngine::InitMenuScreen(olc::Pixel pixelColour_BG)
 {
 
 	spr_olcLogo = new olc::Sprite("./olcPGE_Logo.png");
+	SetDrawTarget(nullptr);
 	Clear(pixelColour_BG);
 	DrawSprite({ (ScreenWidth() / 2 - (spr_olcLogo->width / 2)), (ScreenHeight() / 2 - spr_olcLogo->height / 2) }, spr_olcLogo);
 	DrawString({ ScreenWidth() / 30 * 11, (ScreenHeight() / 3) }, "Made using:", olc::WHITE, 4);
@@ -56,7 +62,7 @@ void clsEngine::InitMenuScreen(olc::Pixel pixelColour_BG)
 
 void clsEngine::DrawMenuScreen(bool& flagDisplay, long double elapsedTime)
 {
-	float speedFactor{ 3.0f};
+	float speedFactor{ 3.0f}; //Need to define this outside this function eventually
 
 	bool debugMode{false};
 	if (debugMode)
@@ -74,7 +80,7 @@ void clsEngine::DrawMenuScreen(bool& flagDisplay, long double elapsedTime)
 			{ 3.0f, 3.0f });
 	}
 
-	if (GetKey(olc::ENTER).bPressed && flagDisplay) { flagDisplay = false; Clear(olc::WHITE); } 
+	if (GetKey(olc::ENTER).bPressed && flagDisplay) { flagDisplay = false; Clear(olc::BLANK); } 
 
 	return;
 }

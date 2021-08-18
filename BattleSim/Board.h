@@ -9,16 +9,20 @@ class clsBoard
 {
 public:
 
-	clsBoard();
+	clsBoard(olc::PixelGameEngine* pointerToPixelGameEngine);
 	~clsBoard();
 
 private:
+
+	olc::PixelGameEngine* pPGE { nullptr };
+
 	std::array<clsCard*, 7> friendlyCards{ nullptr };
 	std::array<clsCard*, 7> enemyCards{ nullptr };
 
 public:
 
 	void Setup();
+	void DrawTest();
 
 private:
 
