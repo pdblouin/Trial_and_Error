@@ -43,7 +43,6 @@ bool clsEngine::OnUserUpdate(float fElapsedTime)
 
 bool clsEngine::OnUserDestroy()
 {
-	
 	return true;
 }
 
