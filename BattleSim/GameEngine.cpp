@@ -11,21 +11,25 @@ clsEngine::clsEngine()
 {
 	// Name your application
 	sAppName = "Test_String";
-	pGameBoard = new clsBoard(this);
+	
 
 }
 
 clsEngine::~clsEngine()
 {
-	delete pGameBoard;
+
 }
 
 bool clsEngine::OnUserCreate()
 {
+	pGameBoard = std::make_unique<clsBoard>(this);
+
 	//Set up menu screen
 	InitMenuScreen(olc::BLACK);
 
-	//Set up layers
+	
+
+	/* Set up layers
 	for(int i = LayerMain + 1; i < LayerCount; i++ )
 	{
 		CreateLayer();
@@ -41,12 +45,8 @@ bool clsEngine::OnUserCreate()
 					 olc::WHITE, 4);
 		
 	}
+	*/
 
-	//SetDrawTarget(LayerMain);
-	//EnableLayer(LayerMain, true);
-
-	//Set up game board in background
-	//pGameBoard->Setup();
 
 	return true;
 }
@@ -67,7 +67,7 @@ bool clsEngine::OnUserUpdate(float fElapsedTime)
 		//EnableLayer(layerToDisplay,true);
 	}
 
-	//pGameBoard->Setup();
+	pGameBoard;
 
 	return true;	
 }

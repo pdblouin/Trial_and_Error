@@ -2,7 +2,9 @@
 
 #include "olcPixelGameEngine.h"
 
-#include <array>
+#include <vector>
+#include <random>
+#include <time.h>
 #include "Card.h"
 
 class clsBoard
@@ -16,16 +18,29 @@ private:
 
 	olc::PixelGameEngine* pPGE { nullptr };
 
-	std::array<clsCard*, 7> friendlyCards{ nullptr };
-	std::array<clsCard*, 7> enemyCards{ nullptr };
+	std::unique_ptr<clsHistogram> pHistogram { nullptr };
 
 public:
 
-	void Setup();
-	void DrawTest();
+	void DrawHistogram(clsHistogram* pHistogram, olc::PixelGameEngine* pge);
 
+};
+
+class clsHistogram
+{
 private:
+	std::vector<int> SimulationResults;
 
-	void runSimulation(); //Maybe custom log class type? To log results?
+public:
+	void DrawSelf(olc::PixelGameEngine* pPGE);
+	void runSimulation(std::vector<int>& SimulationResults);
+
+};
+
+struct HistogramData
+{
+public:
+
+	result
 
 };

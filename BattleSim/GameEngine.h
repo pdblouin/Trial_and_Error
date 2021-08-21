@@ -18,7 +18,7 @@ private:
 	int layerToDisplay {0};
 
 public:
-	clsBoard* pGameBoard{ nullptr };
+	std::unique_ptr<clsBoard> pGameBoard{ nullptr };
 
 	olc::Sprite* spr_olcLogo{ nullptr };
 

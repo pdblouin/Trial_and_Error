@@ -4,44 +4,39 @@
 
 clsBoard::clsBoard(olc::PixelGameEngine* pointerToPixelGameEngine)
 {
-  /*
-  Board constructor should load all cards
-  Maybe based off of some init file? Ideally user chooses cards to run simulation    
-  */
-
+    
     pPGE = pointerToPixelGameEngine;
+    std::srand(std::time(NULL));
+    pHistogram = std::make_unique<clsHistogram>();
 }
 
 clsBoard::~clsBoard()
 {
+}
+
+void clsBoard::DrawHistogram(clsHistogram* pHistogram, olc::PixelGameEngine* pPGE)
+{
+    pHistogram->DrawSelf(pPGE);
+}
+
+void clsHistogram::DrawSelf(olc::PixelGameEngine* pPGE)
+{
+  //Run simulation (hopefully in another thread when I'm not a drooling noob, but once per frame for now)
+  clsHistogram::runSimulation(SimulationResults);
+
+  //Loop through std::vector
+  for (std::vector<int>::iterator it = std::begin (SimulationResults); it != std::end (SimulationResults); ++it) 
+  {
+
+    //Get 
     
+  }
+
 }
 
-void clsBoard::runSimulation()
+void clsHistogram::runSimulation(std::vector<int>& SimulationResults)
 {
-    //Add stuff here later
-}
-
-void clsBoard::Setup()
-{
-  /*
-  uint32_t newLayer{ pPGE->CreateLayer() };
-
-  pPGE->EnableLayer(newLayer, true);
-
-  pPGE->SetDrawTarget(newLayer);
-  pPGE->DrawStringDecal({static_cast<float>(pPGE->ScreenWidth()), static_cast<float>(pPGE->ScreenHeight())}, "Test", olc::WHITE, {3.0f, 3.0f});
-  pPGE->DrawStringDecal({static_cast<float>(pPGE->ScreenWidth() / 2), static_cast<float>(pPGE->ScreenHeight() / 2)}, "Test", olc::WHITE, {6.0f, 6.0f});
-
-  pPGE->SetDrawTarget(nullptr);
-
-  return;
-  */
-}
-
-void clsBoard::DrawTest()
-{
-
-    pPGE->DrawStringDecal({static_cast<float>(pPGE->ScreenWidth() / 2), static_cast<float>(pPGE->ScreenHeight() / 2)}, "Test", olc::WHITE, {3.0f, 3.0f});
+    int x = std::rand() % 15;
+    SimulationResults.push_back(x);
 
 }
