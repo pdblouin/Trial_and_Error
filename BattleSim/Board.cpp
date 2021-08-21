@@ -24,22 +24,24 @@ void clsBoard::runSimulation()
 
 void clsBoard::Setup()
 {
-  uint8_t newLayer{ pPGE->CreateLayer() };
+  /*
+  uint32_t newLayer{ pPGE->CreateLayer() };
 
   pPGE->EnableLayer(newLayer, true);
 
   pPGE->SetDrawTarget(newLayer);
-  pPGE->DrawStringDecal({static_cast<float>(pPGE->ScreenWidth()), static_cast<float>(pPGE->ScreenHeight())}, "Test", olc::BLACK, {3.0f, 3.0f});
   pPGE->DrawStringDecal({static_cast<float>(pPGE->ScreenWidth()), static_cast<float>(pPGE->ScreenHeight())}, "Test", olc::WHITE, {3.0f, 3.0f});
+  pPGE->DrawStringDecal({static_cast<float>(pPGE->ScreenWidth() / 2), static_cast<float>(pPGE->ScreenHeight() / 2)}, "Test", olc::WHITE, {6.0f, 6.0f});
 
   pPGE->SetDrawTarget(nullptr);
 
   return;
+  */
 }
 
 void clsBoard::DrawTest()
 {
 
-    pPGE->DrawStringDecal({static_cast<float>(pPGE->ScreenWidth()), static_cast<float>(pPGE->ScreenHeight())}, "Test", olc::BLACK, {3.0f, 3.0f});
+    pPGE->DrawStringDecal({static_cast<float>(pPGE->ScreenWidth() / 2), static_cast<float>(pPGE->ScreenHeight() / 2)}, "Test", olc::WHITE, {3.0f, 3.0f});
 
 }

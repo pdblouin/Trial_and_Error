@@ -9,9 +9,13 @@ class clsEngine : public olc::PixelGameEngine
 {
 private:
 
+	enum layerIndex : uint8_t { LayerMain = 0, LayerPlaceholder1, LayerPlaceholder2, LayerPlaceholder3, LayerBackground, LayerCount };
+
 	bool flagMenuDisplay{ true };
 
 	long double timeElapsed{ 0.0f };
+
+	int layerToDisplay {0};
 
 public:
 	clsBoard* pGameBoard{ nullptr };
