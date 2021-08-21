@@ -29,24 +29,16 @@ bool clsEngine::OnUserCreate()
 
 	
 
-	/* Set up layers
-	for(int i = LayerMain + 1; i < LayerCount; i++ )
+
+	for(int i = LayerFront + 1; i < LayerCount; i++ )
 	{
 		CreateLayer();
 		EnableLayer(i, true); //Enabling early, good or bad?
 		SetDrawTarget(i);
 
-		if (i % 2 == 1) Clear(olc::DARK_MAGENTA);
-		else Clear(olc::DARK_GREEN);
-
-		std::string LayerDescription = "This is layer: ";
-		DrawString({ (ScreenWidth() / 30 * 11), (ScreenHeight() / 3) }, 
-					 LayerDescription.append(std::to_string(i)), 
-					 olc::WHITE, 4);
+		Clear(olc::BLANK);
 		
 	}
-	*/
-
 
 	return true;
 }
@@ -55,21 +47,7 @@ bool clsEngine::OnUserUpdate(float fElapsedTime)
 {
 	timeElapsed += fElapsedTime;
 
-	DrawMenuScreen(flagMenuDisplay, timeElapsed);
-
-	/*
-	if (GetKey(olc::ENTER).bPressed)
-	{
-		EnableLayer(layerToDisplay, true);
-		SetDrawTarget(layerToDisplay);
-		Clear(olc::BLANK);
-		layerToDisplay++;
-		//if (layerToDisplay = LayerCount) { layerToDisplay = 0; }
-		//EnableLayer(layerToDisplay,true);
-	}
-	*/
-
-	SetDrawTarget(LayerMain);
+	DrawMenuScreen(flagMenuDisplay, timeElapsed);	
 
 	if (!flagMenuDisplay) pGameBoard->DrawHistogram();
 	
@@ -86,7 +64,7 @@ void clsEngine::InitMenuScreen(olc::Pixel pixelColour_BG)
 {
 
 	spr_olcLogo = new olc::Sprite("./olcPGE_Logo.png");
-	SetDrawTarget(LayerMain);
+	SetDrawTarget(LayerFront);
 	Clear(pixelColour_BG);
 	DrawSprite({ (ScreenWidth() / 2 - (spr_olcLogo->width / 2)), (ScreenHeight() / 2 - spr_olcLogo->height / 2) }, spr_olcLogo);
 	DrawString({ ScreenWidth() / 30 * 11, (ScreenHeight() / 3) }, "Made using:", olc::WHITE, 4);
@@ -100,7 +78,7 @@ void clsEngine::DrawMenuScreen(bool& flagDisplay, long double elapsedTime)
 
 	if (!flagDisplay) return; 
 
-	SetDrawTarget(LayerMain);
+	SetDrawTarget(LayerFront);
 
 	float speedFactor{ 3.0f}; //Need to define this outside this function eventually
 

@@ -9,7 +9,7 @@ class clsEngine : public olc::PixelGameEngine
 {
 private:
 
-	enum layerIndex : uint8_t { LayerMain = 0, LayerPlaceholder1, LayerPlaceholder2, LayerPlaceholder3, LayerBackground, LayerCount };
+	enum layerIndex : uint8_t { LayerFront = 0, LayerMain, LayerBackground, LayerCount };
 
 	bool flagMenuDisplay{ true };
 
