@@ -57,6 +57,7 @@ bool clsEngine::OnUserUpdate(float fElapsedTime)
 
 	DrawMenuScreen(flagMenuDisplay, timeElapsed);
 
+	/*
 	if (GetKey(olc::ENTER).bPressed)
 	{
 		EnableLayer(layerToDisplay, true);
@@ -66,9 +67,12 @@ bool clsEngine::OnUserUpdate(float fElapsedTime)
 		//if (layerToDisplay = LayerCount) { layerToDisplay = 0; }
 		//EnableLayer(layerToDisplay,true);
 	}
+	*/
 
-	pGameBoard;
+	SetDrawTarget(LayerMain);
 
+	if (!flagMenuDisplay) pGameBoard->DrawHistogram();
+	
 	return true;	
 }
 
@@ -87,7 +91,8 @@ void clsEngine::InitMenuScreen(olc::Pixel pixelColour_BG)
 	DrawSprite({ (ScreenWidth() / 2 - (spr_olcLogo->width / 2)), (ScreenHeight() / 2 - spr_olcLogo->height / 2) }, spr_olcLogo);
 	DrawString({ ScreenWidth() / 30 * 11, (ScreenHeight() / 3) }, "Made using:", olc::WHITE, 4);
 	DrawString({ ScreenWidth() / 53 * (54/2 - 36/2), (ScreenHeight() / 3 * 2) }, "Copyright 2018-2021 OneLoneCoder.com", olc::WHITE, 3);
-
+	
+	return;
 }
 
 void clsEngine::DrawMenuScreen(bool& flagDisplay, long double elapsedTime)
@@ -115,7 +120,7 @@ void clsEngine::DrawMenuScreen(bool& flagDisplay, long double elapsedTime)
 			{ 3.0f, 3.0f });
 	}
 
-	if (GetKey(olc::ENTER).bPressed) { flagDisplay = false; Clear(olc::BLANK); } 
+	if (GetKey(olc::ENTER).bPressed) { flagDisplay = false; Clear(olc::BLACK); } 
 
 	return;
 }

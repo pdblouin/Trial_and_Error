@@ -7,29 +7,11 @@
 #include <time.h>
 #include "Card.h"
 
-class clsBoard
-{
-public:
-
-	clsBoard(olc::PixelGameEngine* pointerToPixelGameEngine);
-	~clsBoard();
-
-private:
-
-	olc::PixelGameEngine* pPGE { nullptr };
-
-	std::unique_ptr<clsHistogram> pHistogram { nullptr };
-
-public:
-
-	void DrawHistogram(clsHistogram* pHistogram, olc::PixelGameEngine* pge);
-
-};
-
 class clsHistogram
 {
 private:
 	std::vector<int> SimulationResults;
+	std::map<int, int> HistogramBars;
 
 public:
 	void DrawSelf(olc::PixelGameEngine* pPGE);
@@ -37,10 +19,18 @@ public:
 
 };
 
-struct HistogramData
+class clsBoard
 {
 public:
 
-	result
+	clsBoard(olc::PixelGameEngine* pointerToPixelGameEngine);
+	~clsBoard();
+private:
+	olc::PixelGameEngine* pPGE { nullptr };
+	std::unique_ptr<clsHistogram> pHistogram { nullptr };
+
+public:
+
+	void DrawHistogram();
 
 };
