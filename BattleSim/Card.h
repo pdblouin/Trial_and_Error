@@ -11,15 +11,15 @@ class clsCard
 
     private: 
 
-        olc::vi2d m_Position;
-        bool m_isFriendly, m_isEnemy;
+        olc::PixelGameEngine* pPGE;
+
+        olc::vf2d m_Position{0.0f, 0.0f};
         int m_AP, m_HP, m_Tier;
 
-
     public: 
-        clsCard(olc::vi2d init_Position);
+        clsCard(olc::PixelGameEngine* pPGE, bool setRandomStats = true);
         ~clsCard();
-        void DrawSelf(olc::PixelGameEngine* pge);
+        void DrawSelf();
     
     private:
 

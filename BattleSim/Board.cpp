@@ -9,6 +9,13 @@ clsBoard::clsBoard(olc::PixelGameEngine* pointerToPixelGameEngine)
     pPGE = pointerToPixelGameEngine;
     std::srand(std::time(NULL));
     pHistogram = std::make_unique<clsHistogram>();
+
+    for (int i = 0; i < 8; i++)
+    {
+        Player1_Cards[i] = nullptr;
+        Player2_Cards[i] = nullptr;
+    }
+
 }
 
 clsBoard::~clsBoard()
@@ -49,6 +56,17 @@ void clsBoard::RunDiceRollSimulation(int d_N, int totalDiceRolls)
 
     return;
 
+}
+
+void clsBoard::GenerateAllCards()
+{
+    for (int i = 0; i < 8; i++)
+    {
+        Player1_Cards[i] = std::make_unique<clsCard>(pPGE);
+        Player1_Cards[i]->DrawSelf();
+        "Error on purpose to find my spot"
+        Player2_Cards[i] = std::make_unique<clsCard>(pPGE);
+    }
 }
 
 void clsHistogram::DrawSelf(olc::PixelGameEngine* pPGE, const std::vector<int>& simulationResults, const int dice_Sides)
