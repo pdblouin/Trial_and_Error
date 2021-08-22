@@ -15,9 +15,23 @@ clsBoard::~clsBoard()
 {
 }
 
-void clsBoard::DrawHistogram(const int dice_Sides)
+void clsBoard::DrawHistogram(int& dice_Sides, long long& dice_RollNum)
 {
     pHistogram->DrawSelf(pPGE, SimulationResults, dice_Sides);
+    pPGE->SetDrawTarget(nullptr);
+	pPGE->DrawStringDecal({0.0f, 10.0f}, "Dice sides: " + std::to_string(dice_Sides) + "    Press CTRL+UP/DOWN to change", olc::MAGENTA, {2.0f, 2.0f});
+	pPGE->DrawStringDecal({0.0f, 50.0f}, "Dice rolls: " + std::to_string(dice_RollNum) + "   Press SHIFT+UP/DOWN to change", olc::GREEN, {2.0f, 2.0f});
+	pPGE->DrawStringDecal({200.0f, 90.0f}, "Press ENTER to refresh.", olc::YELLOW, {2.0f, 2.0f});
+	
+
+	if (pPGE->GetKey(olc::ENTER).bPressed) RunDiceRollSimulation(dice_Sides, dice_RollNum);
+	
+	if ((pPGE->GetKey(olc::UP).bPressed) && (pPGE->GetKey(olc::CTRL).bHeld)) dice_Sides++;
+	if ((pPGE->GetKey(olc::DOWN).bPressed) && (pPGE->GetKey(olc::CTRL).bHeld)) dice_Sides < 2 ? dice_Sides = 1 : dice_Sides--;
+
+	if ((pPGE->GetKey(olc::UP).bPressed) && (pPGE->GetKey(olc::SHIFT).bHeld)) dice_RollNum = dice_RollNum * 10;
+	if ((pPGE->GetKey(olc::DOWN).bPressed) && (pPGE->GetKey(olc::SHIFT).bHeld)) (dice_RollNum/10) >= 1 ? dice_RollNum = dice_RollNum / 10 : dice_RollNum = 1;
+
     return;
 }
 

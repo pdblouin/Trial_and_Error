@@ -33,6 +33,6 @@ private:
 
 public:
 	void RunDiceRollSimulation(int d_N, int totalDiceRolls);
-	void DrawHistogram(const int dice_Sides);
+	void DrawHistogram(int& dice_Sides, long long& dice_RollNum);
 
 };
