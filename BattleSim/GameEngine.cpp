@@ -49,27 +49,26 @@ bool clsEngine::OnUserUpdate(float fElapsedTime)
 	timeElapsed += fElapsedTime;
 	framesRendered++;
 
-
-
 	DrawMenuScreen(flagMenuDisplay, timeElapsed);	
 
-	if (!flagMenuDisplay)
+	if (!flagMenuDisplay && flagHistDisplay)
 	{
 		pGameBoard->DrawHistogram(dice_Sides);
 		SetDrawTarget(nullptr);
 		DrawStringDecal({0.0f, 10.0f}, "Dice sides: " + std::to_string(dice_Sides) + "    Press CTRL+UP/DOWN to change", olc::MAGENTA, {2.0f, 2.0f});
 		DrawStringDecal({0.0f, 50.0f}, "Dice rolls: " + std::to_string(dice_RollNum) + "   Press SHIFT+UP/DOWN to change", olc::GREEN, {2.0f, 2.0f});
 		DrawStringDecal({200.0f, 90.0f}, "Press ENTER to refresh.", olc::YELLOW, {2.0f, 2.0f});
-	} 
+	
 
 	if (GetKey(olc::ENTER).bPressed) pGameBoard->RunDiceRollSimulation(dice_Sides, dice_RollNum);
 	
 	if ((GetKey(olc::UP).bPressed) && (GetKey(olc::CTRL).bHeld)) dice_Sides++;
-	if ((GetKey(olc::DOWN).bPressed) && (GetKey(olc::CTRL).bHeld)) dice_Sides--;
+	if ((GetKey(olc::DOWN).bPressed) && (GetKey(olc::CTRL).bHeld)) dice_Sides < 2 ? dice_Sides = 1 : dice_Sides--;
 
 	if ((GetKey(olc::UP).bPressed) && (GetKey(olc::SHIFT).bHeld)) dice_RollNum = dice_RollNum * 10;
 	if ((GetKey(olc::DOWN).bPressed) && (GetKey(olc::SHIFT).bHeld)) (dice_RollNum/10) >= 1 ? dice_RollNum = dice_RollNum / 10 : dice_RollNum = 1;
 
+	}
 
 	return true;	
 }
@@ -110,7 +109,7 @@ void clsEngine::DrawMenuScreen(bool& flagDisplay, long double elapsedTime)
 			{ 3.0f, 3.0f });
 	}
 
-	if (GetKey(olc::ENTER).bPressed) { flagDisplay = false; Clear(olc::BLACK); } 
+	if (GetKey(olc::ENTER).bPressed) { flagDisplay = false; flagHistDisplay = true; Clear(olc::BLACK); } 
 
 	return;
 }

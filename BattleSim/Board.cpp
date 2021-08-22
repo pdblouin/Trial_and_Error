@@ -88,7 +88,7 @@ void clsHistogram::DrawSelf(olc::PixelGameEngine* pPGE, const std::vector<int>& 
         pPGE->EnableLayer(0 , true);
         pPGE->DrawStringDecal({static_cast<float>(pPGE->ScreenWidth()/H_Bar_Total*H_Bar.first), static_cast<float>(pPGE->ScreenHeight())*0.9f},
         std::to_string(H_Bar.first + 1), olc::BLACK, {3.0f, 3.0f});
-        pPGE->DrawStringDecal({static_cast<float>(pPGE->ScreenWidth()/H_Bar_Total*H_Bar.first), static_cast<float>(pPGE->ScreenHeight())*0.7f},
+        pPGE->DrawStringDecal({static_cast<float>(pPGE->ScreenWidth()/H_Bar_Total*H_Bar.first), static_cast<float>(pPGE->ScreenHeight()) - (static_cast<float>(pPGE->ScreenHeight())* 0.80f / static_cast<float>(H_Bar_MaxHeight) * static_cast<float>(H_Bar.second)) + 10.0f},
         std::to_string(H_Bar.second), olc::BLUE, {2.0f, 2.0f});
 
     }

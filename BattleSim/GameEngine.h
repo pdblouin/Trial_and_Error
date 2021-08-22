@@ -12,6 +12,7 @@ private:
 	enum layerIndex : uint8_t { LayerFront = 0, LayerMain, LayerBackground, LayerCount };
 
 	bool flagMenuDisplay{ true };
+	bool flagHistDisplay{ false };
 
 	long double timeElapsed{ 0.0f };
 
@@ -20,7 +21,7 @@ private:
 	long long framesRendered {0};
 
 	int dice_Sides{6};
-	int dice_RollNum{100};
+	long long dice_RollNum{100};
 
 public:
 	std::unique_ptr<clsBoard> pGameBoard{ nullptr };
