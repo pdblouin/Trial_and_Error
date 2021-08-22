@@ -17,6 +17,11 @@ private:
 
 	int layerToDisplay {0};
 
+	long long framesRendered {0};
+
+	int dice_Sides{6};
+	int dice_RollNum{100};
+
 public:
 	std::unique_ptr<clsBoard> pGameBoard{ nullptr };
 

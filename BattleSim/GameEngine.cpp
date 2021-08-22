@@ -22,12 +22,13 @@ clsEngine::~clsEngine()
 
 bool clsEngine::OnUserCreate()
 {
-	pGameBoard = std::make_unique<clsBoard>(this);
 
 	//Set up menu screen
 	InitMenuScreen(olc::BLACK);
 
-	
+	//Set up board state
+	pGameBoard = std::make_unique<clsBoard>(this);
+	pGameBoard->RunDiceRollSimulation(dice_Sides, dice_RollNum);
 
 
 	for(int i = LayerFront + 1; i < LayerCount; i++ )
@@ -46,11 +47,30 @@ bool clsEngine::OnUserCreate()
 bool clsEngine::OnUserUpdate(float fElapsedTime)
 {
 	timeElapsed += fElapsedTime;
+	framesRendered++;
+
+
 
 	DrawMenuScreen(flagMenuDisplay, timeElapsed);	
 
-	if (!flagMenuDisplay) pGameBoard->DrawHistogram();
+	if (!flagMenuDisplay)
+	{
+		pGameBoard->DrawHistogram(dice_Sides);
+		SetDrawTarget(nullptr);
+		DrawStringDecal({0.0f, 10.0f}, "Dice sides: " + std::to_string(dice_Sides) + "    Press CTRL+UP/DOWN to change", olc::MAGENTA, {2.0f, 2.0f});
+		DrawStringDecal({0.0f, 50.0f}, "Dice rolls: " + std::to_string(dice_RollNum) + "   Press SHIFT+UP/DOWN to change", olc::GREEN, {2.0f, 2.0f});
+		DrawStringDecal({200.0f, 90.0f}, "Press ENTER to refresh.", olc::YELLOW, {2.0f, 2.0f});
+	} 
+
+	if (GetKey(olc::ENTER).bPressed) pGameBoard->RunDiceRollSimulation(dice_Sides, dice_RollNum);
 	
+	if ((GetKey(olc::UP).bPressed) && (GetKey(olc::CTRL).bHeld)) dice_Sides++;
+	if ((GetKey(olc::DOWN).bPressed) && (GetKey(olc::CTRL).bHeld)) dice_Sides--;
+
+	if ((GetKey(olc::UP).bPressed) && (GetKey(olc::SHIFT).bHeld)) dice_RollNum = dice_RollNum * 10;
+	if ((GetKey(olc::DOWN).bPressed) && (GetKey(olc::SHIFT).bHeld)) (dice_RollNum/10) >= 1 ? dice_RollNum = dice_RollNum / 10 : dice_RollNum = 1;
+
+
 	return true;	
 }
 
@@ -80,15 +100,7 @@ void clsEngine::DrawMenuScreen(bool& flagDisplay, long double elapsedTime)
 
 	SetDrawTarget(LayerFront);
 
-	float speedFactor{ 3.0f}; //Need to define this outside this function eventually
-
-	bool debugMode{true};
-	if (debugMode)
-	{
-		DrawStringDecal({0.0f,0.0f}, std::to_string(elapsedTime), olc::WHITE, {3.0f, 3.0f});
-		DrawStringDecal({0.0f,30.0f}, std::to_string(128 + 128*(sinf(elapsedTime))), olc::WHITE, {3.0f, 3.0f});
-		speedFactor = 3.0f;
-	}
+	float speedFactor{ 3.0f}; //speeds up the pulsating text, I would bet there's a better way to do this
 
 	if (flagDisplay)
 	{

@@ -10,13 +10,12 @@
 class clsHistogram
 {
 private:
-	std::vector<int> SimulationResults;
 	std::map<int, int> HistogramBars;
+	bool HistogramInitialized {false};
 
 public:
-	void DrawSelf(olc::PixelGameEngine* pPGE);
-	void runSimulation(std::vector<int>& SimulationResults);
-
+	void DrawSelf(olc::PixelGameEngine* pPGE, const std::vector<int>& simulationResults, const int dice_sides);
+	void ResetInit();
 };
 
 class clsBoard
@@ -26,11 +25,14 @@ public:
 	clsBoard(olc::PixelGameEngine* pointerToPixelGameEngine);
 	~clsBoard();
 private:
+	
 	olc::PixelGameEngine* pPGE { nullptr };
+
+	std::vector<int> SimulationResults;
 	std::unique_ptr<clsHistogram> pHistogram { nullptr };
 
 public:
-
-	void DrawHistogram();
+	void RunDiceRollSimulation(int d_N, int totalDiceRolls);
+	void DrawHistogram(const int dice_Sides);
 
 };
