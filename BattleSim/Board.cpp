@@ -10,16 +10,12 @@ clsBoard::clsBoard(olc::PixelGameEngine* pointerToPixelGameEngine)
     std::srand(std::time(NULL));
     pHistogram = std::make_unique<clsHistogram>();
 
-    for (int i = 0; i < 8; i++)
-    {
-        Player1_Cards[i] = nullptr;
-        Player2_Cards[i] = nullptr;
-    }
-
 }
 
 clsBoard::~clsBoard()
 {
+    for (int i = 1; i < Player1_Cards.size(); i++) delete Player1_Cards[i];
+    for (int i = 1; i < Player2_Cards.size(); i++) delete Player2_Cards[i];
 }
 
 void clsBoard::DrawHistogram(int& dice_Sides, long long& dice_RollNum)
@@ -60,13 +56,29 @@ void clsBoard::RunDiceRollSimulation(int d_N, int totalDiceRolls)
 
 void clsBoard::GenerateAllCards()
 {
-    for (int i = 0; i < 8; i++)
+    //Number from 1 to 7
+    int CardNum = (std::rand() % 6) + 1;
+    for (int i = 0; i < CardNum; i++) { clsCard* pCard = new clsCard(pPGE); Player1_Cards.push_back(pCard); }
+
+    //Recompute board size for player 2
+    CardNum = (std::rand() % 6) + 1;  
+    for (int i = 0; i < CardNum; i++) { clsCard* pCard = new clsCard(pPGE); Player2_Cards.push_back(pCard); }
+}
+
+void clsBoard::DrawAllCards()
+{
+    for (int i = 1; i < Player1_Cards.size(); i++)
     {
-        Player1_Cards[i] = std::make_unique<clsCard>(pPGE);
-        Player1_Cards[i]->DrawSelf();
-        "Error on purpose to find my spot"
-        Player2_Cards[i] = std::make_unique<clsCard>(pPGE);
+        Player1_Cards[i]->DrawSelf({static_cast<float>(pPGE->ScreenWidth() ) / static_cast<float>(Player1_Cards.size() * i),
+                                    static_cast<float>(pPGE->ScreenHeight() ) * 0.85f });
     }
+
+    for (int i = 1; i < Player2_Cards.size(); i++)
+    {
+        Player2_Cards[i]->DrawSelf({static_cast<float>(pPGE->ScreenWidth() ) / static_cast<float>(Player2_Cards.size() * i),
+                                    static_cast<float>(pPGE->ScreenHeight() ) * 0.15f });
+    }
+
 }
 
 void clsHistogram::DrawSelf(olc::PixelGameEngine* pPGE, const std::vector<int>& simulationResults, const int dice_Sides)

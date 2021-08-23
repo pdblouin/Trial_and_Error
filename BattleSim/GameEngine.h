@@ -13,6 +13,7 @@ private:
 
 	bool flagMenuDisplay{ true };
 	bool flagHistDisplay{ false };
+	bool flagBoardDisplay{ true };
 
 	long double timeElapsed{ 0.0f };
 
