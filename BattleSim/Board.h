@@ -41,6 +41,7 @@ public:
 	void DrawHistogram(int& dice_Sides, long long& dice_RollNum);
 	void GenerateAllCards();
 	void DrawAllCards();
+	void DeleteAllCards();
 	
 
 private:

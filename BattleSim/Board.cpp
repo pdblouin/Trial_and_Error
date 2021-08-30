@@ -67,17 +67,34 @@ void clsBoard::GenerateAllCards()
 
 void clsBoard::DrawAllCards()
 {
-    for (int i = 1; i < Player1_Cards.size(); i++)
+    for (int i = 0; i < Player1_Cards.size(); i++)
     {
-        Player1_Cards[i]->DrawSelf({static_cast<float>(pPGE->ScreenWidth() ) / static_cast<float>(Player1_Cards.size() * i),
-                                    static_cast<float>(pPGE->ScreenHeight() ) * 0.85f });
+        Player1_Cards[i]->DrawSelf({static_cast<float>(pPGE->ScreenWidth() ) - (static_cast<float>(i) * static_cast<float>(pPGE->ScreenWidth()) / static_cast<float>(Player1_Cards.size())),
+                                    static_cast<float>(pPGE->ScreenHeight() ) * 0.70f });
     }
 
-    for (int i = 1; i < Player2_Cards.size(); i++)
+    for (int i = 0; i < Player2_Cards.size(); i++)
     {
-        Player2_Cards[i]->DrawSelf({static_cast<float>(pPGE->ScreenWidth() ) / static_cast<float>(Player2_Cards.size() * i),
-                                    static_cast<float>(pPGE->ScreenHeight() ) * 0.15f });
+        Player2_Cards[i]->DrawSelf({static_cast<float>(pPGE->ScreenWidth() ) - (static_cast<float>(i) * static_cast<float>(pPGE->ScreenWidth()) / static_cast<float>(Player2_Cards.size())),
+                                    static_cast<float>(pPGE->ScreenHeight() ) * 0.20f });
     }
+
+}
+
+void clsBoard::DeleteAllCards()
+{
+    for (int i = 0; i < Player1_Cards.size(); i++)
+    {
+        delete Player1_Cards[i];
+    }
+
+    for (int i = 0; i < Player2_Cards.size(); i++)
+    {
+        delete Player2_Cards[i];
+    }
+
+Player1_Cards.clear();
+Player2_Cards.clear();
 
 }
 

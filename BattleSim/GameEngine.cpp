@@ -52,6 +52,14 @@ bool clsEngine::OnUserUpdate(float fElapsedTime)
 	if (!flagMenuDisplay && flagHistDisplay) pGameBoard->DrawHistogram(dice_Sides, dice_RollNum);
 	if (!flagMenuDisplay && flagBoardDisplay) pGameBoard->DrawAllCards();
 
+	if (GetKey(olc::ENTER).bPressed) 
+	{
+		pGameBoard->DeleteAllCards();
+		pGameBoard->GenerateAllCards(); 
+		SetDrawTarget(nullptr); 
+		Clear(olc::BLANK);
+	}
+
 	return true;	
 }
 
