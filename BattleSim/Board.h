@@ -33,13 +33,15 @@ private:
 	std::vector<int> SimulationResults;
 	std::unique_ptr<clsHistogram> pHistogram { nullptr };
 
-	std::unique_ptr<clsCard> Player1_Cards[7];
-	std::unique_ptr<clsCard> Player2_Cards[7];
+	std::vector<clsCard*> Player1_Cards;
+	std::vector<clsCard*> Player2_Cards;
 
 public:
 	void RunDiceRollSimulation(int d_N, int totalDiceRolls);
 	void DrawHistogram(int& dice_Sides, long long& dice_RollNum);
 	void GenerateAllCards();
+	void DrawAllCards();
+	void DeleteAllCards();
 	
 
 private:

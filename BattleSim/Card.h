@@ -17,9 +17,9 @@ class clsCard
         int m_AP, m_HP, m_Tier;
 
     public: 
-        clsCard(olc::PixelGameEngine* pPGE, bool setRandomStats = true);
+        clsCard(olc::PixelGameEngine* pPGE);
         ~clsCard();
-        void DrawSelf();
+        void DrawSelf(olc::vf2d cardPosition);
     
     private:
 
