@@ -38,5 +38,6 @@
 *.vcxproj.user
 *.vs
 *.vscode
+Release/
 Debug/
 BattleSim/BattleSim
