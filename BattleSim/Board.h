@@ -36,6 +36,11 @@ private:
 	std::vector<clsCard*> Player1_Cards;
 	std::vector<clsCard*> Player2_Cards;
 
+	std::vector<float> P1_CardLeftEdgePos;
+	std::vector<float> P2_CardLeftEdgePos;
+
+	float P1_row_TopOfCards{ 0.0f }, P2_row_TopOfCards{ 0.0f };
+
 public:
 	void RunDiceRollSimulation(int d_N, int totalDiceRolls);
 	void DrawHistogram(int& dice_Sides, long long& dice_RollNum);
@@ -46,5 +51,6 @@ public:
 
 private:
 	
+	float GetCard_LeftEdge(int numberOfCards, int currentCardIndex, float cardWidth);
 
 };

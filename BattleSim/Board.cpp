@@ -10,12 +10,12 @@ clsBoard::clsBoard(olc::PixelGameEngine* pointerToPixelGameEngine)
     std::srand(std::time(NULL));
     pHistogram = std::make_unique<clsHistogram>();
 
+    P1_row_TopOfCards = static_cast<float>(pPGE->ScreenHeight()) * (2.0f / 3.0f);
+    P2_row_TopOfCards = static_cast<float>(pPGE->ScreenHeight()) * (1.0f / 3.0f);
 }
 
 clsBoard::~clsBoard()
 {
-    for (int i = 1; i < Player1_Cards.size(); i++) delete Player1_Cards[i];
-    for (int i = 1; i < Player2_Cards.size(); i++) delete Player2_Cards[i];
 }
 
 void clsBoard::DrawHistogram(int& dice_Sides, long long& dice_RollNum)
@@ -56,47 +56,73 @@ void clsBoard::RunDiceRollSimulation(int d_N, int totalDiceRolls)
 
 void clsBoard::GenerateAllCards()
 {
-    //Number from 1 to 7
-    int CardNum = (std::rand() % 6) + 1;
-    for (int i = 0; i < CardNum; i++) { clsCard* pCard = new clsCard(pPGE); Player1_Cards.push_back(pCard); }
+    //Number from 0 to 7
+    int CardNum = (std::rand() % 8);
+    for (int i = 0; i < CardNum; i++) 
+    {
+        clsCard* pCard = new clsCard(pPGE);
+        Player1_Cards.push_back(pCard);
+        P1_CardLeftEdgePos.push_back(GetCard_LeftEdge(CardNum, i, pCard->GetWidth()));
+    }
 
     //Recompute board size for player 2
-    CardNum = (std::rand() % 6) + 1;  
-    for (int i = 0; i < CardNum; i++) { clsCard* pCard = new clsCard(pPGE); Player2_Cards.push_back(pCard); }
+    CardNum = (std::rand() % 8);  
+    for (int i = 0; i < CardNum; i++) 
+    { 
+        clsCard* pCard = new clsCard(pPGE); 
+        Player2_Cards.push_back(pCard);
+        P2_CardLeftEdgePos.push_back(GetCard_LeftEdge(CardNum, i, pCard->GetWidth()));
+    }
 }
 
 void clsBoard::DrawAllCards()
 {
-    for (int i = 0; i < Player1_Cards.size(); i++)
+    pPGE->DrawStringDecal({ 0.0f, 30.0f }, std::to_string(Player1_Cards.size()), olc::WHITE, { 2.0f, 2.0f });
+
+    for (size_t i = 0; i < Player1_Cards.size(); i++)
     {
-        Player1_Cards[i]->DrawSelf({static_cast<float>(pPGE->ScreenWidth() ) - (static_cast<float>(i) * static_cast<float>(pPGE->ScreenWidth()) / static_cast<float>(Player1_Cards.size())),
-                                    static_cast<float>(pPGE->ScreenHeight() ) * 0.70f });
+        Player1_Cards[i]->DrawSelf({ P1_CardLeftEdgePos[i], P1_row_TopOfCards });
     }
 
-    for (int i = 0; i < Player2_Cards.size(); i++)
-    {
-        Player2_Cards[i]->DrawSelf({static_cast<float>(pPGE->ScreenWidth() ) - (static_cast<float>(i) * static_cast<float>(pPGE->ScreenWidth()) / static_cast<float>(Player2_Cards.size())),
-                                    static_cast<float>(pPGE->ScreenHeight() ) * 0.20f });
+    pPGE->DrawStringDecal({ 0.0f, 0.0f }, std::to_string(Player2_Cards.size()), olc::WHITE, { 2.0f, 2.0f });
+
+    for (size_t i = 0; i < Player2_Cards.size(); i++)
+    {    
+        Player2_Cards[i]->DrawSelf({ P2_CardLeftEdgePos[i], P2_row_TopOfCards });
     }
 
 }
 
 void clsBoard::DeleteAllCards()
 {
-    for (int i = 0; i < Player1_Cards.size(); i++)
+    for (size_t i = 0; i < Player1_Cards.size(); i++)
     {
         delete Player1_Cards[i];
     }
 
-    for (int i = 0; i < Player2_Cards.size(); i++)
+    for (size_t i = 0; i < Player2_Cards.size(); i++)
     {
         delete Player2_Cards[i];
     }
 
-Player1_Cards.clear();
-Player2_Cards.clear();
+    Player1_Cards.clear();
+    Player2_Cards.clear();
+
+    P1_CardLeftEdgePos.clear();
+    P2_CardLeftEdgePos.clear();
 
 }
+
+
+float clsBoard::GetCard_LeftEdge(int numberOfCards, int currentCardIndex, float cardWidth)
+{  
+    float totalBlankSpace{ static_cast<float>(pPGE->ScreenWidth()) - (cardWidth * numberOfCards) };
+    float spaceBetweenCards{ cardWidth * 0.15f };
+    float totalSpaceBetweenCards{ spaceBetweenCards * (numberOfCards - 1) };
+    float leftEdgeBlankSpace{ (totalBlankSpace - totalSpaceBetweenCards) / 2 };
+    
+    return (leftEdgeBlankSpace + (currentCardIndex * (cardWidth + spaceBetweenCards)));
+};
 
 void clsHistogram::DrawSelf(olc::PixelGameEngine* pPGE, const std::vector<int>& simulationResults, const int dice_Sides)
 {
@@ -105,15 +131,8 @@ void clsHistogram::DrawSelf(olc::PixelGameEngine* pPGE, const std::vector<int>& 
   {
     for (int i : simulationResults) 
     {
-
-        if (HistogramBars.find(i) == HistogramBars.end())
-        {
-            HistogramBars[i] = 1;
-        } 
-        else
-        {
-            HistogramBars[i]++;
-        }
+        if (HistogramBars.find(i) == HistogramBars.end()) {HistogramBars[i] = 1;} 
+        else { HistogramBars[i]++; }
     }
 
     HistogramInitialized = true;
