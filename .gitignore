@@ -39,4 +39,5 @@
 *.vs
 *.vscode
 Debug/
+Release/
 BattleSim/BattleSim
