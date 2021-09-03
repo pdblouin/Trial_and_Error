@@ -32,12 +32,12 @@ bool clsEngine::OnUserCreate()
 	for(int i = LayerFront + 1; i < LayerCount; i++ )
 	{
 		CreateLayer();
-		EnableLayer(i, true); //Enabling early, good or bad?
+		EnableLayer(i, true);
 		SetDrawTarget(i);
-
-		Clear(olc::BLANK);
-		
+		Clear(olc::BLANK);		
 	}
+
+	pGameBoard->GenerateAllCards();
 
 	return true;
 }
@@ -50,6 +50,15 @@ bool clsEngine::OnUserUpdate(float fElapsedTime)
 	DrawMenuScreen(flagMenuDisplay, timeElapsed);	
 
 	if (!flagMenuDisplay && flagHistDisplay) pGameBoard->DrawHistogram(dice_Sides, dice_RollNum);
+	if (!flagMenuDisplay && flagBoardDisplay) pGameBoard->DrawAllCards();
+
+	if (GetKey(olc::ENTER).bHeld) 
+	{
+		pGameBoard->DeleteAllCards();
+		pGameBoard->GenerateAllCards(); 
+		SetDrawTarget(nullptr); 
+		Clear(olc::BLANK);
+	}
 
 	return true;	
 }
@@ -90,7 +99,7 @@ void clsEngine::DrawMenuScreen(bool& flagDisplay, long double elapsedTime)
 			{ 3.0f, 3.0f });
 	}
 
-	if (GetKey(olc::ENTER).bPressed) { flagDisplay = false; flagHistDisplay = true; Clear(olc::BLACK); } 
+	if (GetKey(olc::ENTER).bPressed) { flagDisplay = false; Clear(olc::BLACK); } 
 
 	return;
 }
