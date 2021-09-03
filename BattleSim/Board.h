@@ -33,16 +33,24 @@ private:
 	std::vector<int> SimulationResults;
 	std::unique_ptr<clsHistogram> pHistogram { nullptr };
 
-	std::unique_ptr<clsCard> Player1_Cards[7];
-	std::unique_ptr<clsCard> Player2_Cards[7];
+	std::vector<clsCard*> Player1_Cards;
+	std::vector<clsCard*> Player2_Cards;
+
+	std::vector<float> P1_CardLeftEdgePos;
+	std::vector<float> P2_CardLeftEdgePos;
+
+	float P1_row_TopOfCards{ 0.0f }, P2_row_TopOfCards{ 0.0f };
 
 public:
 	void RunDiceRollSimulation(int d_N, int totalDiceRolls);
 	void DrawHistogram(int& dice_Sides, long long& dice_RollNum);
 	void GenerateAllCards();
+	void DrawAllCards();
+	void DeleteAllCards();
 	
 
 private:
 	
+	float GetCard_LeftEdge(int numberOfCards, int currentCardIndex, float cardWidth);
 
 };
