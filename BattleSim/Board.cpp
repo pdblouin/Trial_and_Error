@@ -18,7 +18,7 @@ clsBoard::~clsBoard()
 {
 }
 
-void clsBoard::DrawHistogram(int& dice_Sides, long long& dice_RollNum)
+void clsBoard::DrawHistogram(uint8_t& dice_Sides, uint64_t& dice_RollNum)
 {
     pHistogram->DrawSelf(pPGE, SimulationResults, dice_Sides);
     pPGE->SetDrawTarget(nullptr);
@@ -38,7 +38,7 @@ void clsBoard::DrawHistogram(int& dice_Sides, long long& dice_RollNum)
     return;
 }
 
-void clsBoard::RunDiceRollSimulation(int d_N, int totalDiceRolls)
+void clsBoard::RunDiceRollSimulation(uint8_t d_N, uint64_t totalDiceRolls)
 {
     SimulationResults.clear();
 
@@ -51,7 +51,6 @@ void clsBoard::RunDiceRollSimulation(int d_N, int totalDiceRolls)
     pHistogram->ResetInit();
 
     return;
-
 }
 
 void clsBoard::GenerateAllCards()

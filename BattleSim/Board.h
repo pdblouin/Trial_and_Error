@@ -23,11 +23,19 @@ public:
 class clsBoard
 {
 public:
+	void RunDiceRollSimulation(uint8_t d_N, uint64_t totalDiceRolls);
+	void DrawHistogram(uint8_t& dice_Sides, uint64_t& dice_RollNum);
+	void GenerateAllCards();
+	void DrawAllCards();
+	void DeleteAllCards();
 
 	clsBoard(olc::PixelGameEngine* pointerToPixelGameEngine);
 	~clsBoard();
+
 private:
 	
+	float GetCard_LeftEdge(int numberOfCards, int currentCardIndex, float cardWidth);
+
 	olc::PixelGameEngine* pPGE { nullptr };
 
 	std::vector<int> SimulationResults;
@@ -40,17 +48,5 @@ private:
 	std::vector<float> P2_CardLeftEdgePos;
 
 	float P1_row_TopOfCards{ 0.0f }, P2_row_TopOfCards{ 0.0f };
-
-public:
-	void RunDiceRollSimulation(int d_N, int totalDiceRolls);
-	void DrawHistogram(int& dice_Sides, long long& dice_RollNum);
-	void GenerateAllCards();
-	void DrawAllCards();
-	void DeleteAllCards();
-	
-
-private:
-	
-	float GetCard_LeftEdge(int numberOfCards, int currentCardIndex, float cardWidth);
 
 };
