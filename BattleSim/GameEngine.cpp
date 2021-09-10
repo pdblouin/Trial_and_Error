@@ -108,7 +108,12 @@ void clsEngine::DrawMenuScreen(bool& flagDisplay, long double elapsedTime)
 			{ static_cast<float>(textScaleFactor), static_cast<float>(textScaleFactor) });
 	}
 
-	if (GetKey(olc::ENTER).bPressed) { flagDisplay = false; Clear(olc::BLANK); } 
+	if (GetKey(olc::ENTER).bPressed)
+	{ 
+		flagDisplay = false; 
+		Clear(olc::BLANK);
+		delete spr_olcLogo;
+	} 
 
 	return;
 }
@@ -120,7 +125,7 @@ float clsEngine::GetCentered_PosX(float itemPixelWidth)
 
 float clsEngine::GetCentered_PosX(std::string stringToCenter, float scaleFactor)
 {
-	return GetCentered_PosX((static_cast<float>(GetTextSize(stringToCenter).x)*scaleFactor));
+	return GetCentered_PosX((static_cast<float>(GetTextSize(stringToCenter).x) * scaleFactor));
 }
 
 int clsEngine::GetCentered_PosX(int itemPixelWidth)
@@ -130,5 +135,5 @@ int clsEngine::GetCentered_PosX(int itemPixelWidth)
 
 int clsEngine::GetCentered_PosX(std::string stringToCenter, int scaleFactor)
 {
-	return GetCentered_PosX(((GetTextSize(stringToCenter).x)*scaleFactor));
+	return GetCentered_PosX(((GetTextSize(stringToCenter).x) * scaleFactor));
 }
