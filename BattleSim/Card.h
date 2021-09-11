@@ -25,7 +25,7 @@ private:
 public: 
     clsCard(olc::PixelGameEngine* pPGE);
     ~clsCard();
-    void DrawSelf(olc::vf2d cardTopLeftPos);
+    void DrawSelf(olc::vf2d cardTopLeftPos, uint8_t toLayer);
     float GetWidth();
     
 private:

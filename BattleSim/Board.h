@@ -26,7 +26,7 @@ public:
 	void RunDiceRollSimulation(uint8_t d_N, uint64_t totalDiceRolls);
 	void DrawHistogram(uint8_t& dice_Sides, uint64_t& dice_RollNum);
 	void GenerateAllCards();
-	void DrawAllCards();
+	void DrawAllCards(uint8_t toLayer);
 	void DeleteAllCards();
 
 	clsBoard(olc::PixelGameEngine* pointerToPixelGameEngine);

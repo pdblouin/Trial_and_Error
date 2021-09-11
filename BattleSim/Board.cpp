@@ -55,7 +55,6 @@ void clsBoard::RunDiceRollSimulation(uint8_t d_N, uint64_t totalDiceRolls)
 
 void clsBoard::GenerateAllCards()
 {
-    //Number from 0 to 7
     int CardNum = (std::rand() % 8);
     for (int i = 0; i < CardNum; i++) 
     {
@@ -64,7 +63,6 @@ void clsBoard::GenerateAllCards()
         P1_CardLeftEdgePos.push_back(GetCard_LeftEdge(CardNum, i, pCard->GetWidth()));
     }
 
-    //Recompute board size for player 2
     CardNum = (std::rand() % 8);  
     for (int i = 0; i < CardNum; i++) 
     { 
@@ -74,20 +72,20 @@ void clsBoard::GenerateAllCards()
     }
 }
 
-void clsBoard::DrawAllCards()
+void clsBoard::DrawAllCards(uint8_t toLayer)
 {
-    pPGE->DrawStringDecal({ 0.0f, 30.0f }, std::to_string(Player1_Cards.size()), olc::WHITE, { 2.0f, 2.0f });
+    //pPGE->DrawStringDecal({ 0.0f, 30.0f }, std::to_string(Player1_Cards.size()), olc::WHITE, { 2.0f, 2.0f });
 
     for (size_t i = 0; i < Player1_Cards.size(); i++)
     {
-        Player1_Cards[i]->DrawSelf({ P1_CardLeftEdgePos[i], P1_row_TopOfCards });
+        Player1_Cards[i]->DrawSelf({ P1_CardLeftEdgePos[i], P1_row_TopOfCards }, toLayer);
     }
 
-    pPGE->DrawStringDecal({ 0.0f, 0.0f }, std::to_string(Player2_Cards.size()), olc::WHITE, { 2.0f, 2.0f });
+    //pPGE->DrawStringDecal({ 0.0f, 0.0f }, std::to_string(Player2_Cards.size()), olc::WHITE, { 2.0f, 2.0f });
 
     for (size_t i = 0; i < Player2_Cards.size(); i++)
     {    
-        Player2_Cards[i]->DrawSelf({ P2_CardLeftEdgePos[i], P2_row_TopOfCards });
+        Player2_Cards[i]->DrawSelf({ P2_CardLeftEdgePos[i], P2_row_TopOfCards }, toLayer);
     }
 
 }

@@ -22,8 +22,8 @@ public:
 
 	float GetCentered_PosX(float itemPixelWidth);
 	float GetCentered_PosX(std::string stringToCenter, float scaleFactor);
-	int GetCentered_PosX(int itemPixelWidth);
-	int GetCentered_PosX(std::string stringToCenter, int scaleFactor);
+	int   GetCentered_PosX(int itemPixelWidth);
+	int   GetCentered_PosX(std::string stringToCenter, int scaleFactor);
 	
 
 public:
@@ -32,7 +32,7 @@ public:
 
 private:
 
-	enum layerIndex : uint8_t { LayerMain = 0, LayerDebug, LayerBackground, LayerCount };
+	enum layerIndex : uint8_t { LayerMain = 0, LayerDebug, LayerDraw, LayerBackground, LayerCount };
 
 	bool flagMenuDisplay{ true };
 	const std::string menuText_Title{"PDB C++ Learning Project"};

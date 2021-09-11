@@ -24,11 +24,11 @@ clsCard::~clsCard()
 };
 
 
-void clsCard::DrawSelf(olc::vf2d cardPosition)
+void clsCard::DrawSelf(olc::vf2d cardPosition, uint8_t toLayer)
 {
-	pPGE->SetDrawTarget(nullptr);
+	pPGE->SetDrawTarget(toLayer);
 	pPGE->DrawDecal(cardPosition, pCard_Decal, { scaleFactor, scaleFactor });	
-	pPGE->SetDrawTarget(nullptr);
+	pPGE->SetDrawTarget(toLayer);
 	pPGE->DrawStringDecal(cardPosition * 1.01f, std::to_string(m_AP) + "/" + std::to_string(m_HP), olc::YELLOW, {1.55f, 1.55f});
 	return;
 };

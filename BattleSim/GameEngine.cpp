@@ -27,8 +27,6 @@ bool clsEngine::OnUserCreate()
 	pGameBoard = std::make_unique<clsBoard>(this);
 	pGameBoard->RunDiceRollSimulation(dice_Sides, dice_RollNum);
 
-
-
 	pGameBoard->GenerateAllCards();
 
 	return true;
@@ -42,7 +40,17 @@ bool clsEngine::OnUserUpdate(float fElapsedTime)
 	DrawMenuScreen(flagMenuDisplay, timeElapsed);	
 
 	if (!flagMenuDisplay && flagHistDisplay) pGameBoard->DrawHistogram(dice_Sides, dice_RollNum);
-	if (!flagMenuDisplay && flagBoardDisplay) pGameBoard->DrawAllCards();
+	
+	if (!flagMenuDisplay && flagBoardDisplay)
+	{
+		SetDrawTarget(LayerDraw);
+		DrawStringDecal({ 0.0f, ((float)ScreenHeight() / 2.0f) }, "Testing, this is in front.", olc::WHITE, { 5.0f, 5.0f });
+		
+		pGameBoard->DrawAllCards(LayerDraw);
+		
+		SetDrawTarget(LayerDraw);
+		DrawStringDecal({ 0.0f, ((float)ScreenHeight() / 3.0f) }, "Testing, this is in back.", olc::WHITE, { 5.0f, 5.0f });
+	}
 
 	if (GetKey(olc::ENTER).bPressed) 
 	{
