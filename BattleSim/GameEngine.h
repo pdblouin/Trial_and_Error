@@ -1,6 +1,10 @@
 #pragma once
 
+#include <vector>
+
 #include "olcPixelGameEngine.h"
+#include "UI_Element.h"
+#include "Settings.h"
 #include "Card.h"
 #include "Board.h"
 
@@ -17,8 +21,11 @@ public:
 
 	void InitLayers();
 
-	void InitMenuScreen(olc::Pixel pixelColour_BG);
-	void DrawMenuScreen(bool& flagDisplay, long double elapsedTime);
+	void SelectScreenToDraw(clsSettings* settings);
+
+	void InitSplashScreen(olc::Pixel pixelColour_BG);
+	void DrawSplashScreen(long double elapsedTime);
+	void UnloadSplashScreen();
 
 	float GetCentered_PosX(float itemPixelWidth);
 	float GetCentered_PosX(std::string stringToCenter, float scaleFactor);
@@ -30,18 +37,19 @@ public:
 	std::unique_ptr<clsBoard> pGameBoard{ nullptr };
 	olc::Sprite* spr_olcLogo{ nullptr };
 
-private:
-
 	enum layerIndex : uint8_t { LayerMain = 0, LayerDebug, LayerDraw, LayerBackground, LayerCount };
 
-	bool flagMenuDisplay{ true };
-	const std::string menuText_Title{"PDB C++ Learning Project"};
-	const std::string menuText_PrePNG{"Made using:"};
-	const std::string menuText_Copyright{"Copyright 2018-2021 OneLoneCoder.com"};
-	const std::string menuText_Enter{"Press [ENTER] to continue."};
+private:
 
-	bool flagHistDisplay{ false };
-	bool flagBoardDisplay{ true };
+	bool flagSplashScreen_Display{ true };
+	const std::string SplashScreenText_Title{"PDB C++ Learning Project"};
+	const std::string SplashScreenText_PrePNG{"Made using:"};
+	const std::string SplashScreenText_Copyright{"Copyright 2018-2021 OneLoneCoder.com"};
+	const std::string SplashScreenText_Enter{"Press [ENTER] to continue."};
+	std::vector<clsUI_Element*> mUI_SplashScreen;
+
+	bool flagHistDisplay{ true };
+	bool flagBoardDisplay{ false };
 
 	long double timeElapsed{ 0.0f };
 

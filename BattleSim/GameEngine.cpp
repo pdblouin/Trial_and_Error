@@ -3,6 +3,7 @@
 #include <cmath>
 #include <string>
 
+#include "Settings.h"
 #include "GameEngine.h"
 #include "Board.h"
 
@@ -15,13 +16,13 @@ clsEngine::clsEngine()
 
 clsEngine::~clsEngine()
 {
-
+	
 }
 
 bool clsEngine::OnUserCreate()
 {
 	InitLayers();
-	InitMenuScreen(olc::BLACK);
+	InitSplashScreen(olc::BLACK);
 
 	//Set up board state
 	pGameBoard = std::make_unique<clsBoard>(this);
@@ -37,20 +38,15 @@ bool clsEngine::OnUserUpdate(float fElapsedTime)
 	timeElapsed += fElapsedTime;
 	framesRendered++;
 
-	DrawMenuScreen(flagMenuDisplay, timeElapsed);	
+	DrawSplashScreen(timeElapsed);	
 
 	if (!flagMenuDisplay && flagHistDisplay) pGameBoard->DrawHistogram(dice_Sides, dice_RollNum);
 	
 	if (!flagMenuDisplay && flagBoardDisplay)
 	{
-		SetDrawTarget(LayerDraw);
-		DrawStringDecal({ 0.0f, ((float)ScreenHeight() / 2.0f) }, "Testing, this is in front.", olc::WHITE, { 5.0f, 5.0f });
-		
 		pGameBoard->DrawAllCards(LayerDraw);
-		
-		SetDrawTarget(LayerDraw);
-		DrawStringDecal({ 0.0f, ((float)ScreenHeight() / 3.0f) }, "Testing, this is in back.", olc::WHITE, { 5.0f, 5.0f });
 	}
+	
 
 	if (GetKey(olc::ENTER).bPressed) 
 	{
@@ -82,27 +78,52 @@ void clsEngine::InitLayers()
 	}
 }
 
-void clsEngine::InitMenuScreen(olc::Pixel pixelColour_BG)
+void clsEngine::SelectScreenToDraw(clsSettings* settings)
 {
+	switch (settings->DrawWhat())
+	{
+	case clsSettings::Splash_Screen:
+		break;
+	case clsSettings::Menu_Screen:
+		break;
+	case clsSettings::Histogram_Screen:
+		break;
+	case clsSettings::CardSim_Screen:
+		break;
+	case clsSettings::Loading_Screen:
+		break;
+	default: //should return error
+		break;
+	}
+}
 
+void clsEngine::InitSplashScreen(olc::Pixel pixelColour_BG)
+{
+	clsUI_Element* SplashScreen_Title = new clsUI_Element(this);
+	SplashScreen_Title->alignmentParameters.pct_PosY = 0.1f;
+	SplashScreen_Title->AddString(SplashScreenText_Title);
+	SplashScreen_Title->SetSize_Rel()
+
+	mUI_SplashScreen.emplace_back()
 	spr_olcLogo = new olc::Sprite("./olcPGE_Logo.png");
 	SetDrawTarget(LayerBackground);
 	Clear(pixelColour_BG);
-	
+
 	return;
 }
 
-void clsEngine::DrawMenuScreen(bool& flagDisplay, long double elapsedTime)
+void clsEngine::DrawSplashScreen(long double elapsedTime)
 {
 
-	if (!flagDisplay) return; 
+	if (!flagMenuDisplay) return; 
 
 	SetDrawTarget(LayerBackground);
+	//DrawRo
 
 	float speedFactor{3.0f}; //speeds up the pulsating text, I would bet there's a better way to do this
 	int textScaleFactor{3};
 
-	if (flagDisplay)
+	if (flagMenuDisplay)
 	{
 		DrawSprite({ (ScreenWidth() / 2 - (spr_olcLogo->width / 2)), (ScreenHeight() / 2 - spr_olcLogo->height / 2) }, spr_olcLogo);
 	
@@ -118,12 +139,17 @@ void clsEngine::DrawMenuScreen(bool& flagDisplay, long double elapsedTime)
 
 	if (GetKey(olc::ENTER).bPressed)
 	{ 
-		flagDisplay = false; 
-		Clear(olc::BLANK);
-		delete spr_olcLogo;
+		UnloadSplashScreen();
 	} 
 
 	return;
+}
+
+void clsEngine::UnloadSplashScreen()
+{
+	flagMenuDisplay = false;
+	Clear(olc::BLANK);
+	delete spr_olcLogo;
 }
 
 float clsEngine::GetCentered_PosX(float itemPixelWidth)

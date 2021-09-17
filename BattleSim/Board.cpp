@@ -143,13 +143,15 @@ void clsHistogram::DrawSelf(olc::PixelGameEngine* pPGE, const std::vector<int>& 
   int H_Bar_Total = dice_Sides;
   long long H_Bar_MaxHeight = 1;
 
-  //Get max height to normalize tallest bar
+    //Get max height to normalize tallest bar
     for (auto const& H_Bar : HistogramBars)
     {
         if (H_Bar_MaxHeight < H_Bar.second) H_Bar_MaxHeight = H_Bar.second;
     }
 
-//Then draw histogram
+    olc::Pixel colorMouseOver = olc::YELLOW;
+
+    //Then draw histogram
     for (auto const& H_Bar : HistogramBars)
     {    
         //Draw bar
